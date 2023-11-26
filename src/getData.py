@@ -30,11 +30,11 @@ def getData(event, context):
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'message': 'Datos enviados exitosamente a Kinesis'})
+            'body': json.dumps({'message': 'Se enviaron los datos a Kinesis correctamente'})
         }
 
     except Exception as e:
-        print(f"Error en la solicitud a la API de OpenWeather o al enviar datos a Kinesis: {str(e)}")
+        print(f"Error al enviar datos a Kinesis :( : {str(e)}")
         return {
             'statusCode': 500,
             'body': json.dumps({'error': 'Internal Server Error'})
