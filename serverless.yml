@@ -21,7 +21,7 @@ functions:
     handler: src/getData.getData
     events:
       - httpApi:
-          path: /geData
+          path: /getData
           method: get
   sentiments:
     handler: src/sentiments.sentiments
