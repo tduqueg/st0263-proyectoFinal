@@ -1,0 +1,39 @@
+service: weather-stream-sentiments
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.9
+  environment:
+    kinesisStream: !Ref WeatherKinesisStream
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - kinesis:PutRecord
+          Resource:
+            - !Sub "arn:aws:kinesis:${AWS::Region}:${AWS::AccountId}:stream/${WeatherKinesisStream}"
+
+functions:
+  getData:
+    handler: src/getData.getData
+    events:
+      - httpApi:
+          path: /geData
+          method: get
+  sentiments:
+    handler: src/sentiments.sentiments
+    events:
+      - httpApi:
+          path: /sentiments
+          method: get
+
+resources:
+  Resources:
+    WeatherKinesisStream:
+      Type: "AWS::Kinesis::Stream"
+      Properties:
+        Name: weatherKinesisStream
+        ShardCount: 1

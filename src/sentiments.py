@@ -1,7 +1,7 @@
 import json
 
 
-def analyze_sentiments(event, context):
+def sentiments(event, context):
     body = {
         "message": "Go Serverless v3.0! Your function executed successfully!",
         "input": event,
