@@ -1,12 +1,11 @@
-service: weather-stream-sentiments
+service: Servicio del clima
 frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: python3.9
   environment:
-    kinesisStream: !Ref WeatherKinesisStream
-
+    weather: c788196b5ec7cb6c8bf8b0822dbbae41 # API KEY WEATHER
   iam:
     role:
       statements:
@@ -17,17 +16,17 @@ provider:
             - !Sub "arn:aws:kinesis:${AWS::Region}:${AWS::AccountId}:stream/${WeatherKinesisStream}"
 
 functions:
-  getData:
-    handler: src/getData.getData
+  get_data:
+    handler: src/get_data.get_data
     events:
       - httpApi:
-          path: /getData
+          path: /get-data
           method: get
-  sentiments:
-    handler: src/sentiments.sentiments
+  analyze_sentiments:
+    handler: src/analyze_sentiments.analyze_sentiments
     events:
       - httpApi:
-          path: /sentiments
+          path: /analyze-sentiments
           method: get
 
 resources:
